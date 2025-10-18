@@ -33,7 +33,7 @@ git push origin master
 git push origin "$VERSION"
 
 # === Build Docker image ===
-docker buildx create --use --name koinsight-builder || docker buildx use koinsight-builder
+docker buildx use koinsight-builder
 docker buildx inspect --bootstrap
 
 # === Build multi-arch image and push it
