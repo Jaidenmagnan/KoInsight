@@ -21,10 +21,10 @@ async function setupServer() {
   app.use(express.urlencoded({ limit: '50mb', extended: true }));
   app.use(morgan('tiny'));
 
-  if (appConfig.env === 'development') {
-    // Allow requests from dev build
-    app.use(cors({ origin: '*' }));
-  }
+  // if (appConfig.env === 'development') {
+  // Allow requests from dev build
+  app.use(cors({ origin: '*' }));
+  // }
 
   app.use('/', kosyncRouter); // Needs to be mounted at root to follow KoSync API
   app.use('/api/plugin', kopluginRouter);
