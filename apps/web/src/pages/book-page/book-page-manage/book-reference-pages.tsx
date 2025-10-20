@@ -59,6 +59,7 @@ export function BookReferencePages({ book }: BookReferencePagesProps) {
         <Button variant="subtle" loading={updateLoading} onClick={onUpdateReferencePages}>
           Update reference pages
         </Button>
+        <Text>This book as xxx pages.</Text>
       </Flex>
     </div>
   );

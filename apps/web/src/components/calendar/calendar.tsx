@@ -14,6 +14,7 @@ import { startOfWeek } from 'date-fns/startOfWeek';
 import { subMonths } from 'date-fns/subMonths';
 import { JSX, ReactNode, useEffect, useState } from 'react';
 import { CalendarWeek } from './calendar-week';
+import { Text } from '@mantine/core';
 
 import style from './calendar.module.css';
 
@@ -30,6 +31,7 @@ export type CalendarProps<T> = {
 
 export function Calendar<T>({ events, dayRenderer }: CalendarProps<T>): JSX.Element {
   const [currentDate, setCurrentDate] = useState(new Date());
+  const [currentStreak, setCurrentStreak] = useState(0);
 
   const startDate = startOfWeek(startOfMonth(currentDate), {
     locale: { options: { weekStartsOn: 1 } },
@@ -44,6 +46,12 @@ export function Calendar<T>({ events, dayRenderer }: CalendarProps<T>): JSX.Elem
     const key = day.toISOString();
     const event = events[key];
     const dayNum = format(day, 'd');
+
+    if (event.data) {
+      setCurrentStreak((currentStreak) => currentStreak + 1);
+    } else {
+      setCurrentStreak(0);
+    }
 
     dates.push(
       <div
@@ -104,6 +112,9 @@ export function Calendar<T>({ events, dayRenderer }: CalendarProps<T>): JSX.Elem
           <Button size="xs" variant="default" onClick={() => setCurrentDate(new Date())}>
             Today
           </Button>
+
+          <Text>Current streak: {currentStreak} days</Text>
+
           <MonthPickerInput size="xs" value={currentDate} onChange={(e) => setCurrentDate(e!)} />
         </Flex>
         <Button
